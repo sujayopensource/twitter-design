@@ -1,0 +1,227 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Monaco;\f2\fnil\fcharset0 HelveticaNeue;
+}
+{\colortbl;\red255\green255\blue255;\red18\green19\blue24;\red255\green255\blue255;\red239\green240\blue240;
+}
+{\*\expandedcolortbl;;\cssrgb\c8627\c9804\c12157;\cssrgb\c100000\c100000\c100000;\cssrgb\c94902\c95294\c95294;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs48 \cf0 \
+\
+2 types of metrics will  be tracked for this architecture:\
+\
+1) Application Metrics - these are the metrics that are part of the application irrespective of underlying infrastructure and technology\
+2) Infrastructure Metrics -  These. Are metrics related to underlying infra and technologies used. \
+\
+\
+I) Application Metrics - there would be 2 types of application metrics:\
+a) User experience metrics - metrics that impact user experience more directly or are related to end user activity\
+\
+b) Service metrics - the metrics with regards to the services that provide the required functionality. \
+\
+\
+A) User Experience metrics:\
+\
+1) Number of Tweets made per second - Tweets/s\
+2) Time taken for a tweet - tweet latency\
+	a) Average\
+    b) Maximum\
+	c) Median\
+	d) p90\
+	e) p99\
+     \
+3) Number of users logged in per second\
+4) Home Timeline Latency:\
+	a) Average\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0     b) Maximum\
+	c) Median\
+	d) p90\
+	e) p99\
+5) User Timeline Latency:\
+	a) Average\
+    b) Maximum\
+	c) Median\
+	d) p90\
+	e) p99\
+6) Search TimeLine Latency:\
+	a) Average\
+    b) Maximum\
+	c) Median\
+	d) p90\
+	e) p99\
+7) Trends Latency:\
+  a) Average\
+    b) Maximum\
+	c) Median\
+	d) p90\
+	e) p99\
+\
+\
+\
+\
+B) Service metrics:\
+\
+1) Processing time per tweet in Tweets Service:\
+	 a) Average\
+    b) Maximum\
+	c) Median\
+	d) p90\
+	e) p99\
+\
+2) Requests Successfully processed by Tweets Service\
+3) Requests dropped by tweets service\
+\
+4) Number of cache hits by Timeline service\
+5) Number of cache misses by timeline service\
+\
+6) Throughput of Indexer Service - number of messages processed per second\
+7) Number of documents entered into hashTag index by Indexer\
+8) Number of documents entered into tweet index by Indexer\
+9) Number of documents entered into profile index by Indexer\
+\
+10) Query latency in Query service:\
+ a) Average\
+    b) Maximum\
+	c) Median\
+	d) p90\
+	e) p99\
+11) Number of queries to hashTag index\
+12) Number of queries to tweet index\
+13) Number of queries to profile index\
+\
+14)Number of requests successfully processed by Profiles service\
+15)Number of requests dropped by Profiles service\
+16) Processing time for Profile Service\
+ a) Average\
+    b) Maximum\
+	c) Median\
+	d) p90\
+	e) p99\
+\
+\
+\
+II) Infrastructure Metrics:\
+\
+1) EC2 instance/node metrics:\
+a) 
+\f1\fs32 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 CPUUtilization\
+b) DiskReadOps\
+c) DiskWriteOps\
+d) DiskReadBytes\
+e) DiskWriteBytes\
+f) NetworkIn\
+g) NetworkOut\
+h) NetworkPacketsIn\
+i) NetworkPacketsOut\
+\
+\
+2) AWS 
+\f2\fs39 API Gateway metrics\
+a) 
+\fs32 4XXError\
+b) 5XXError\
+c) CacheHitCount\
+d) CacheMissCount\
+e) Count\
+f) IntegrationLatency\
+g) Latency\
+\
+3) AWS ELB Metrics:\
+a) 
+\f1 ActiveConnectionCount\
+b) ClientTLSNegotiationErrorCount\
+c) ConsumedLCUs\
+d) DroppedInvalidHeaderRequestCount\
+e) ForwardedInvalidHeaderRequestCount\
+f) RequestCount\
+g) RejectedConnectionCount\
+h) NewConnectionCount\
+\
+i) RequestCountPerTarget\
+j) TargetConnectionErrorCount\
+k) TargetResponseTime\
+\
+L) ELBAuthError\
+M) ELBAuthFailure\
+N) ELBAuthLatency\
+O) ELBAuthRefreshTokenSuccess\
+P) ELBAuthSuccess\
+\
+\
+4) AWS SQS Metrics:\
+a) NumberOfMessagesDeleted\
+B) NumberOfMessagesReceived\
+C) \cb4 NumberOfMessagesSent\
+D) SentMessageSize\
+E) \cb3 ApproximateNumberOfMessagesNotVisible\
+F) ApproximateNumberOfMessagesVisible\
+G) NumberOfEmptyReceives\
+\
+5) AWS RDS PostgreSQL metrics:\
+A) CPUUtilization\
+B) DatabaseConnections\
+c) DiskQueueDepth\
+D) FreeableMemory\
+E) FreeStorageSpace\
+f) MaximumUsedTransactionIDs\
+G) NetworkReceiveThroughput\
+H) NetworkTransmitThroughput\
+I) ReadIOPS\
+J) ReadLatency\
+K) ReadThroughput\
+l) SwapUsage\
+m) TransactionLogsDiskUsage\
+N) TransactionLogsGeneration\
+o) WriteIOPS\
+p) WriteLatency\
+q) WriteThroughput\
+\
+\
+6) AWS DynamoDBmetrics:\
+a) ConsumedReadCapacityUnits\
+B) ConsumedWriteCapacityUnits\
+C) ReturnedBytes\
+D) ReturnedItemCount\
+e) ReturnedRecordsCount\
+F) SuccessfulRequestLatency\
+G) SystemErrors\
+\
+\
+7) AWS ELasticSearch metrics:\
+a) ClusterStatus.green\
+B) ClusterStatus.yellow\
+c) ClusterStatus.red\
+d) Nodes\
+E) SearchableDocuments\
+f) DeletedDocuments\
+G) CPUUtilization\
+H) JVMMemoryPressure\
+I) ElasticsearchRequests\
+J) IndexingLatency\
+K) IndexingRate\
+l). SearchLatency\
+M) SearchRate\
+N) SysMemoryUtilization\
+\
+8) Metrics for AWS ElastiCache Redis Cluster:\
+a) CacheHits\
+B) CacheMisses\
+C) CurrConnections\
+D). EngineCPUUtilization\
+E) CurrItems\
+F) GetTypeCmds\
+G) HashBasedCmds\
+H) ListBasedCmds\
+I) SetBasedCmds\
+J) SortedSetBasedCmds\
+K) StringBasedCmds
+\f2\fs39 \
+
+\f0\fs48 \cf0 \cb1 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+\
+ \
+}
