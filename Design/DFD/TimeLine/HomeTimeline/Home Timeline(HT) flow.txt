@@ -1,0 +1,131 @@
+					Home Timeline(HT) flow
+
+
+1) Home Timeline or HT is the list of all recent tweets from all the users the logged in user is following ie the tweets of all followers of logged in user.
+2) HT flows has 2 sub flows:
+	a) Addition of Tweet
+	b) Retrieval of Tweet - Fetch HT
+
+3) The Services involved as TimeLime Service, Tweets Service
+4) Makes use of RDMBS and a Cache too.
+
+
+There are 4 strategies to perform HT:
+1) Strategy A
+	a) Addition of Tweet:
+	   1) Browser/end user posts a tweet
+ 	   2) The request comes to Tweets Service
+           3) Tweets Service adds the tweet to UT cache and to db too - Write-Through
+        
+	b)Retrieval of Tweet - Fetch HT:
+	   1) End user accesses Home timeline
+           2) Request is routed to Timeline Service
+           3) Timeline Service fetches all followees of logged in user from DB.
+           4) Timeline service fetches the recent tweets for each followee from UT cache and merges all the results and sorts them by timestamp
+
+
+Advantages of Strategy A:
+1) Simple
+2) Writes are simple and fast.
+
+DisAdvantages of Strategy A:
+1) reads are slow .
+2) Twitter being read heavy, this strategy breaks down when reads are really high.
+
+
+
+
+2) Strategy B
+	This strategy makes use of an additional service called FanOut for writing tweets out to each follower.
+
+	a) Addition of Tweet:
+	   1) Browser/end user posts a tweet
+ 	   2) The request comes to Tweets Service
+           3) Tweets Service adds the tweet to UT cache and to db too - Write-Through
+           4) Tweets Service sends the tweet to FanOut Service too.
+           5) fanout service gets list of followers for logged in user from DB
+           6) For each follower the Fan Out Service adds the tweet to the HT cache.
+        
+	b)Retrieval of Tweet - Fetch HT:
+	   1) End user accesses Home timeline
+           2) Request is routed to Timeline Service
+           3) Timeline Service fetches the recent tweets for logged in user from HT cache and returns it
+           
+
+Advantages of Strategy B:
+1) Reads are really fast ie HT is displayed very quickly which is favorable as Twitter is read heavy. This strategy ca handle high read rates
+2) Writes are fast for decent number of followers.
+
+DisAdvantages of Strategy B:
+1) For celebrity users say with 10M followers, one tweet will lead to 10M writes to catches. This slows down tweet process for celebrity users.
+
+
+
+
+3) Strategy C
+	This strategy makes use of an additional service called FanOut for writing tweets out to each follower. It also makes use of an additional field in the Users table called isCelebrityUser. This filed is by default false and will be set too true if the number of followers for a user exceed a number say 1M. This can be implemented via trigger and stored procedures.
+
+	a) Addition of Tweet:
+	   1) Browser/end user posts a tweet
+ 	   2) The request is routed to Tweets Service
+           3) Tweets Service adds the tweet to UT cache and to db too - Write-Through
+	   4) Tweets service checks Users table if the logged in User is celebrity.
+           5) Only if Logged in user is NOT CELEBRITY Tweets Service sends the tweet to FanOut Service.
+           6) fanout service gets list of followers for logged in user from DB
+           7) For each follower the Fan Out Service adds the tweet to the HT cache.
+        
+	b)Retrieval of Tweet - Fetch HT:
+	   1)Browser asks for Home timleline (HT)
+	   2)TimeLine Service Fetches HT for logged in user
+	   3) Timeline service gets list of celebrity followees for logged in user from DB
+	   4)TimeLine service fetches UT for each celebrity followee
+	   5)TimeLine service merges the HT and celebrity  UTs and sorts them by timestamp
+           
+
+Advantages of Strategy C:
+1) Writes Not slow for celebrity Users
+
+DisAdvantages of Strategy C:
+1) reads a bit slow and can be speeded up.
+
+
+
+4) Strategy D
+	This strategy makes use of an additional service called FanOut for writing tweets out to each follower.It also makes use of an additional cache called celebrity list each which for each user has the list of celebrities a user follows. This cache is updated as part of the Follows flow by the Relationship Service.
+
+	a) Addition of Tweet:
+	   Same as Strategy A
+
+	b) Update celebrity list of user:
+	  1) End user/browser follows a user
+          2) this request is routed to the Relationships Service
+	  3) Relationship service checks if user  followed is a celebrity from Db - Users table
+          4) if user followed isa celebrity, then Relationship services adds the user to the logged in user's celebrity list - Celebrity List cache
+        
+	b)Retrieval of Tweet - Fetch HT:
+	   1)Browser asks for Home timleline (HT)
+	   2)TimeLine Service Fetches HT for logged in user
+	   3) Timeline service gets list of celebrity followees for logged in user from Celebrity Cache
+	   4)TimeLine service fetches UT for each celebrity followee
+	   5)TimeLine service merges the HT and celebrity  UTs and sorts them by timestamp
+           
+
+Advantages of Strategy D:
+1) Writes Not slow for celebrity Users
+2) Reads are fast too
+3) Reads can be speeded up more by certain optimisations like merging HT of user and UT of celebrity followee when celebrity is followed or when HT accessed first time.
+
+
+
+
+
+
+NOTE:
+ Every diagram has an .png file and a .gliffy file.
+.png file is an image and can be opened as is.
+.gliffy file can be opened by going to https://go.gliffy.com(trial version)
+And importing the respective file. 
+
+Note: Both .png and .gloiffy have same content
+
+

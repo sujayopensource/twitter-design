@@ -1,0 +1,53 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue233;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c93333;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 					User Timeline(UT) flow\
+\
+\
+1) UserTimeline or UT is the list of tweets and retweets that any user has .\
+2) UT flows has 2 sub flows:\
+	a) Addition of Tweet\
+	b) Retrieval of Tweet\
+\
+3) The Services involved as TimeLime Service, Tweets Service\
+4) Makes use of RDMBS and a Cache too.\
+\
+\
+\
+\
+\
+A) Addition of Tweet\
+	a) Browser(end user) posts a tweet and it goes to Tweets service\
+	b) Tweets service adds the tweet to UT cache.\
+	c) The tweet is further added to the database(Tweets Table)\
+\
+B) Tweet Retrieval flow:\
+	a) User accesses User Timeline\
+         b) Request is routed to Timeline Service\
+         c) Timeline Service gets all tweets for logged in user from UT cache\
+         d) if there is cache miss , its fetched from DB. Cache miss  is extremely rare as we using Write-Through when adding a tweet as in flow A\
+\
+\
+\
+\
+NOTE:\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0  Every diagram has an .png file and a .gliffy file.\
+.png file is an image and can be opened as is.\
+.gliffy file can be opened by going to {\field{\*\fldinst{HYPERLINK "https://go.gliffy.com/"}}{\fldrslt 
+\f1 \cf2 \expnd0\expndtw0\kerning0
+\ul \ulc2 https://go.gliffy.com}}
+\f1 \cf2 \expnd0\expndtw0\kerning0
+\ul \ulc2 (trial version)\
+And importing the respective file. \
+\
+Note: Both .png and .gloiffy have same content
+\f0 \cf0 \kerning1\expnd0\expndtw0 \ulnone \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+\
+}
