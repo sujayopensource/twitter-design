@@ -1,69 +1,46 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
-{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\froman\fcharset0 Times-Roman;}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue233;}
-{\*\expandedcolortbl;;\cssrgb\c0\c0\c93333;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+		Search Timeline(ST)
 
-\f0\fs24 \cf0 					Search Timeline(ST)\
-\
-1) Search Timeline ST provides the ability to search for profiles and tweets using keywords and hashtags.\
-\
-2) Returns tweets containing keyword/hashtag and or profiles matching the keyword.\
-\
-3) Search module has 2 main services - Indexer and Query \
-\
-4) Indexer service creates indexes and adds documents(tweets/profile) to the indexes.\
+1) Search Timeline ST provides the ability to search for profiles and tweets using keywords and hashtags.
+
+2) Returns tweets containing keyword/hashtag and or profiles matching the keyword.
+
+3) Search module has 2 main services - Indexer and Query 
+
+4) Indexer service creates indexes and adds documents(tweets/profile) to the indexes.
 5) Query service actually helps in retrieving search results.\
-\
-6) Search Timeline has 4 sub flows:\
-	a) IndexCreation\
-         b) Profile addition to index\
-        c) tweet flow\
-        d) Search flow.\
-\
-\
-\
-a) Index creation:\
-1) On startup of Indexer service , 3 indexes are created  - tweet, hashTag and profile.\
-2) The 3 indexes are created and added to Elastic Search cluster\
-\
-\
-b) Profile addition flow:\
-1) User creates profile\
-2) Request routed to Profile Service\
-3) Profile service creates profile and adds message to Profile Message Q. \
-4) Indexer pulls message from Message Q and adds the profile document to profile index in ES - Elastic  Search cluster.\
-\
-C) Tweet addition flow\
-1) User tweets\
-2) Request routed to Tweet Service\
-3) Tweet Service processes the tweet and pushes a message with tweet details to Message Q.\
-4) Indexer service pulls the message from the Message Q and adds tweet document to hashTag index and tweet index too.\
-\
-D) Search flow - the flow that handles the ST display\
-a) User searches using a keyword.\
-b) The request is routed to Query Service.\
-c) Query services queries the keyword in hashtag, tweet and profile indexes in ES cluster.\
-d) The results from these indexes are merged and returned as Search result - ST\
-\
-\
-\
-\
-\
-\
-NOTE:\
- Every diagram has an .png file and a .gliffy file.\
-.png file is an image and can be opened as is.\
-.gliffy file can be opened by going to {\field{\*\fldinst{HYPERLINK "https://go.gliffy.com/"}}{\fldrslt 
-\f1 \cf2 \expnd0\expndtw0\kerning0
-\ul \ulc2 https://go.gliffy.com}}
-\f1 \cf2 \expnd0\expndtw0\kerning0
-\ul \ulc2 (trial version)\
-And importing the respective file. \
-\
-Note: Both .png and .gloiffy have same content
-\f0 \cf0 \kerning1\expnd0\expndtw0 \ulnone \
-\
-\
-}
+
+6) Search Timeline has 4 sub flows:
+	a) IndexCreation
+         b) Profile addition to index
+        c) tweet flow
+        d) Search flow.
+
+a) Index creation:
+1) On startup of Indexer service , 3 indexes are created  - tweet, hashTag and profile.
+2) The 3 indexes are created and added to Elastic Search cluster
+
+b) Profile addition flow:
+1) User creates profile
+2) Request routed to Profile Service
+3) Profile service creates profile and adds message to Profile Message Q. 
+4) Indexer pulls message from Message Q and adds the profile document to profile index in ES - Elastic  Search cluster.
+
+C) Tweet addition flow
+1) User tweets
+2) Request routed to Tweet Service
+3) Tweet Service processes the tweet and pushes a message with tweet details to Message Q.
+4) Indexer service pulls the message from the Message Q and adds tweet document to hashTag index and tweet index too.
+
+D) Search flow - the flow that handles the ST display
+a) User searches using a keyword.
+b) The request is routed to Query Service.
+c) Query services queries the keyword in hashtag, tweet and profile indexes in ES cluster.
+d) The results from these indexes are merged and returned as Search result - ST
+
+
+NOTE:
+ Every diagram has an .png file and a .gliffy file.
+.png file is an image and can be opened as is.
+.gliffy file can be opened by going to "https://go.gliffy.com and importing the respective file. 
+
+Note: Both .png and .gliffy have same content
