@@ -1,0 +1,47 @@
+		    Trends Flow
+
+1) Trends feature allows a user to view a list of topics(collection of tweets and retweets) that have interesting #tags.
+
+2) The interesting factor is gauged based on a rank score associated with tweets containing a #tag.
+
+3) The trends flow is concerned with the computation of this rank score in real time or near real time and displaying the results as per the score. Higher the rank score higher the priority.
+
+4) Trends flow has 2 sub flows:
+	a) Trends computation and storage 
+	b) Trends retrieval.
+
+
+A) Trends computation:
+
+	1) A stream processing framework - here Storm cluster - is used for this purpose.
+      2) 3 factors associated with a tweet #tag are extracted. These are:
+	a) tweet rate - Volume of tweet with a particular #tag per second
+      b)tweet likes. - Number of likes for tweets with a particular #tag
+      c) tweet geolocation - the location at which tweets with particular #tag is made from.
+
+      3)tweet #tag Rank score is calculated per location as -
+		tweet #tag Rank = tweet Rate. * tweet Likes
+            Such that,
+		tweet Rate = Volume of tweets for give #tag(within a day)/ Number of tweets for given #tag(within a day)
+            Tweet Likes = number offices on a tweet with given #tag(within a day)
+		tweetRate > 10
+
+       4) The computation is modelled using a Storm Topology - DAG:
+	a) The spout reads messages from a message Q and converts them into a tweet tuple
+    B)sanitizerBolt - cleans the tweets based on cleaning rules
+    C) #tag mapping bolt -  maps each tweet to a hash Tag
+    d) tweetVolume computer bolt - computes tweet Rate
+    E) tweetLike computer bolt - computes number of likes 
+    F) geolocation computer bolt - computes location of tweet
+    G) tweet parameter merge bolt - merges tuples from d), e) and f) 
+     H) rank computer bolt - computes the rank as per the formula per location
+    I) sink bolt- stores documents into a document store. Document keyed by location and #tag.
+
+B) Trends Retrieval:
+
+	1) User requests for Trends and this request is routed to Trends retrieval service
+     2)The Trends retrieval service queries the top N trends in descending order of rank from the Document Store
+
+
+
+                
